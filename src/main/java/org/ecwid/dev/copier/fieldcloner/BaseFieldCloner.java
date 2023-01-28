@@ -27,7 +27,9 @@ abstract class BaseFieldCloner implements FieldCloner {
         try {
             if (modifiersField.trySetAccessible()) {
                 modifiersField.setInt(field, nonFinalModifiers);
-                doClone(field, from, to);
+                if ((modifiers & Modifier.STATIC) == 0) {
+                    doClone(field, from, to);
+                } 
             }
         } finally {
             modifiersField.setInt(field, modifiers);
