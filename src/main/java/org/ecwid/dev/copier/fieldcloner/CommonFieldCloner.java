@@ -4,6 +4,7 @@ import org.ecwid.dev.copier.Copier;
 import org.ecwid.dev.copier.ObjectCopyException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 final class CommonFieldCloner extends BaseFieldCloner {
     private final Copier copier;
@@ -20,7 +21,12 @@ final class CommonFieldCloner extends BaseFieldCloner {
             if (field.isSynthetic() || field.isEnumConstant()) {
                 field.set(to, field.get(from));
             } else {
-                field.set(to, copier.copy(srcObj));
+                boolean isStatic = (field.getModifiers() & Modifier.STATIC) != 0;
+                if (!isStatic) {
+                    field.set(to, copier.copy(srcObj));
+                } else {
+                    field.set(to, srcObj);
+                }
             }
         } catch (IllegalAccessException e) {
             throw new ObjectCopyException(field, from, e);
