@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class CopyUtilsTest {
@@ -45,7 +46,7 @@ class CopyUtilsTest {
 
 
     @Test
-    @DisplayName("Deep copy of int array should ret")
+    @DisplayName("Deep copy of int array should return equal array at with diff ref")
     void deepIntArrayCopy() {
         int[] src = {1, 2, 3};
         int[] copy = CopyUtils.deepCopy(src);
@@ -54,6 +55,7 @@ class CopyUtilsTest {
     }
 
     @Test
+    @DisplayName("Deep copy of an object of class with different types of primitives should set correct values of fields in cloned object")
     void copyPrimitiveFields() {
         Primitives primitives = Primitives.builder()
                 .setB(Byte.MAX_VALUE)
@@ -67,5 +69,13 @@ class CopyUtilsTest {
                 .build();
         Primitives copy = CopyUtils.deepCopy(primitives);
         assertEquals(primitives, copy);
+    }
+    
+    @Test
+    @DisplayName("Deep copy of the null object")
+    void copyNull() {
+        Man man = null;
+        Man copy = CopyUtils.deepCopy(null);
+        assertNull(copy);
     }
 }
