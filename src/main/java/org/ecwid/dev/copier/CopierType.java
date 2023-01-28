@@ -1,8 +1,10 @@
 package org.ecwid.dev.copier;
 
+import org.ecwid.dev.factory.HandlerType;
+
 import java.util.function.Predicate;
 
-enum CopierType {
+enum CopierType implements HandlerType<Object> {
     ARRAY(Class::isArray), OBJECT(clz -> true), NO_OP(clz -> clz.isSynthetic() || clz.isEnum() || clz.isAssignableFrom(Class.class));
     private final Predicate<Class<?>> handlePredicate;
 
@@ -10,7 +12,7 @@ enum CopierType {
         this.handlePredicate = handlePredicate;
     }
 
-    boolean canHandle(Object obj) {
+    public boolean canHandle(Object obj) {
         return handlePredicate.test(obj.getClass());
     }
 }
