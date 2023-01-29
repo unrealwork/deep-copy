@@ -29,7 +29,15 @@ final class CopyUtilsTest {
     public static Stream<Arguments> deepCopyTestCases() {
         Man man = new Man("test", 20, List.of("Lord of the Rings"));
         man.addFriend(man);
-        return Stream.of(arguments(man), arguments("Test"), arguments(List.of(1, 2, 3)), arguments(1), arguments(Boolean.TRUE), arguments('a'), arguments(ParameterizedTest.class), arguments(new Integer[] {1, 2, 3}));
+        return Stream.of(
+                arguments(man),
+                arguments("Test"),
+                arguments(List.of(1, 2, 3)), 
+                arguments(1), 
+                arguments(Boolean.TRUE), 
+                arguments('a'), 
+                arguments(ParameterizedTest.class), 
+                arguments(new Integer[] {1, 2, 3}));
     }
 
     @ParameterizedTest(name = "Deep copy of {0} should be correct")
