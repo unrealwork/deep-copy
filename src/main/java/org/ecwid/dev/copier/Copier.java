@@ -1,7 +1,5 @@
 package org.ecwid.dev.copier;
 
-import org.ecwid.dev.event.Event;
-
 import java.util.function.BiConsumer;
 
 /**
@@ -17,23 +15,33 @@ public interface Copier {
      */
     Object copy(Object obj) throws ObjectCopyException;
 
-    static Copier deep() {
-        return deep(null);
+    /**
+     * Create copier for objects that performs deep copy.
+     *
+     * @return Copier instance
+     */
+    static Copier create() {
+        return create(null);
     }
 
-    static Copier deep(BiConsumer<Object, Object> cloneCallback) {
-        DeepObjectCopier deepObjectCopier = new DeepObjectCopier();
+
+    /**
+     * Create copier for objects that performs deep copy and allows to call back on each object's cloning that happens during deep copy of object
+     *
+     * @param cloneCallback callback for each object copy is completed during deep copy of the object. First param of callback is source object and second cloned object.
+     * @return Copier that allows to call back on each object's cloning that happens during deep copy of object.
+     */
+    static Copier create(BiConsumer<Object, Object> cloneCallback) {
+        CommonObjectCopier commonObjectCopier = new CommonObjectCopier();
         if (cloneCallback != null) {
-            deepObjectCopier.registerObserver(
-                    e -> onCloneCompletedEvent(e, cloneCallback),
+            commonObjectCopier.registerObserver(
+                    e -> {
+                        CloneData data = (CloneData) e.data();
+                        cloneCallback.accept(data.getObject(), data.getCopy());
+                    },
                     CopierEventType.CLONE_COMPLETED
             );
         }
-        return deepObjectCopier;
-    }
-
-    private static void onCloneCompletedEvent(Event<Object> event, BiConsumer<Object, Object> cloneCallback) {
-        CloneData data = (CloneData) event.data();
-        cloneCallback.accept(data.getObject(), data.getCopy());
+        return commonObjectCopier;
     }
 }

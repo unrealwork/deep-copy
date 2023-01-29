@@ -5,7 +5,7 @@ import org.ecwid.dev.event.EventType;
 /**
  * Describes events occurring during object's copying.
  */
-public enum CopierEventType implements EventType {
+enum CopierEventType implements EventType {
     /**
      * New instance of object created.
      */

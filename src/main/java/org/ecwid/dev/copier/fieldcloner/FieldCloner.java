@@ -1,5 +1,6 @@
 package org.ecwid.dev.copier.fieldcloner;
 
+import org.ecwid.dev.copier.Copier;
 import org.ecwid.dev.copier.ObjectCopyException;
 
 import java.lang.reflect.Field;
@@ -8,6 +9,15 @@ import java.lang.reflect.Field;
  * Describe classes that clone field from one obejct to another
  */
 public interface FieldCloner {
+    /**
+     * Create Field cloner that uses passed {@link Copier} under the hood.
+     * @param copier Object copier
+     * @return common field cloner.
+     */
+    static FieldCloner withCopier(Copier copier) {
+        return new CommonFieldCloner(copier);
+    }
+
     /**
      * Clone field src one object dest another
      *

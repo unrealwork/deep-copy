@@ -1,5 +1,6 @@
 package org.ecwid.dev.copier;
 
+import org.ecwid.dev.copier.fieldcloner.FieldCloner;
 import org.ecwid.dev.event.BaseEventEmitter;
 import sun.misc.Unsafe;
 
@@ -8,14 +9,14 @@ import java.lang.reflect.Field;
 final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
 
     private static final Unsafe UNSAFE = getUnsafe();
-    private final DeepObjectCopier copier;
+    private final FieldCloner fieldCloner;
 
-    private ObjectCopier(DeepObjectCopier copier) {
-        this.copier = copier;
+    ObjectCopier(FieldCloner fieldClonerFactory) {
+        this.fieldCloner = fieldClonerFactory;
     }
 
-    static ObjectCopier withObjectCopier(DeepObjectCopier copier) {
-        return new ObjectCopier(copier);
+    static ObjectCopier withFieldCloner(FieldCloner fieldCloner) {
+        return new ObjectCopier(fieldCloner);
     }
 
     private static Unsafe getUnsafe() {
@@ -36,7 +37,7 @@ final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
             notifyObservers(CopierEvent.objectCreated(obj, copy));
             Field[] fields = aClass.getDeclaredFields();
             for (Field field : fields) {
-                copier.getFieldClonerFactory().get(field).clone(field, obj, copy);
+                fieldCloner.clone(field, obj, copy);
             }
             notifyObservers(CopierEvent.cloneCompleted(obj, copy));
             return copy;
@@ -45,6 +46,4 @@ final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
         }
 
     }
-
-
 }
