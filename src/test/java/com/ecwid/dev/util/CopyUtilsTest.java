@@ -24,19 +24,12 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class CopyUtilsTest {
 
+    private static final int PARALLEL_TASK_COUNT = 1000;
+
     public static Stream<Arguments> deepCopyTestCases() {
         Man man = new Man("test", 20, List.of("Lord of the Rings"));
         man.addFriend(man);
-        return Stream.of(
-                arguments(man),
-                arguments("Test"),
-                arguments(List.of(1, 2, 3)),
-                arguments(1),
-                arguments(Boolean.TRUE),
-                arguments('a'),
-                arguments(ParameterizedTest.class),
-                arguments(new Integer[] {1, 2, 3})
-        );
+        return Stream.of(arguments(man), arguments("Test"), arguments(List.of(1, 2, 3)), arguments(1), arguments(Boolean.TRUE), arguments('a'), arguments(ParameterizedTest.class), arguments(new Integer[] {1, 2, 3}));
     }
 
     @ParameterizedTest(name = "Deep copy of {0} should be correct")
@@ -61,16 +54,7 @@ final class CopyUtilsTest {
     @Test
     @DisplayName("Deep copy of an object of class with different types of primitives should set correct values of fields in cloned object")
     void copyPrimitiveFields() throws ObjectCopyException {
-        Primitives primitives = Primitives.builder()
-                .setB(Byte.MAX_VALUE)
-                .setC('a')
-                .setI(1)
-                .setL(1L)
-                .setS(Short.MAX_VALUE)
-                .setD(1)
-                .setIs(Boolean.TRUE)
-                .setF(1)
-                .build();
+        Primitives primitives = Primitives.builder().setB(Byte.MAX_VALUE).setC('a').setI(1).setL(1L).setS(Short.MAX_VALUE).setD(1).setIs(Boolean.TRUE).setF(1).build();
         Primitives copy = CopyUtils.deepCopy(primitives);
         assertEquals(primitives, copy);
     }
@@ -95,18 +79,15 @@ final class CopyUtilsTest {
     @DisplayName("Copying object in parallel should create new object for each thread")
     void copyInParallel() {
         Integer src = 1;
-        int copyCount = 10;
         Map<Integer, Integer> map = new ConcurrentHashMap<>();
-        IntStream.range(0, copyCount)
-                .parallel()
-                .forEach(i -> {
-                    try {
-                        Integer copy = CopyUtils.deepCopy(src);
-                        map.merge(System.identityHashCode(copy),1, Integer::sum);
-                    } catch (ObjectCopyException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-        Assertions.assertEquals(copyCount, map.size());
+        IntStream.range(0, PARALLEL_TASK_COUNT).parallel().forEach(i -> {
+            try {
+                Integer copy = CopyUtils.deepCopy(src);
+                map.merge(System.identityHashCode(copy), 1, Integer::sum);
+            } catch (ObjectCopyException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Assertions.assertEquals(PARALLEL_TASK_COUNT, map.size());
     }
 }
