@@ -27,7 +27,7 @@ public final class CopyUtils {
      * Make deep copy of an object with callback on each clone completed during the process
      *
      * @param obj           object to clone
-     * @param cloneCallback - callback for completed clone.
+     * @param cloneCallback - callback for completed clone. First param - source object, second - cloned.
      * @param <T>           type of object
      * @return cloned object
      * @throws ObjectCopyException in case of error related to object copying process
