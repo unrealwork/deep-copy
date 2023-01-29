@@ -1,5 +1,15 @@
 package org.ecwid.dev.event;
 
+/**
+ * Describes classes observing some events
+ *
+ * @param <T> event data type
+ */
 public interface EventObserver<T> {
-    void onEvent(Event<T> e);
+    /**
+     * Handling point
+     *
+     * @param evt occurred event
+     */
+    void onEvent(Event<T> evt);
 }

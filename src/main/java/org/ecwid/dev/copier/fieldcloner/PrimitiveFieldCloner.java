@@ -9,10 +9,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 final class PrimitiveFieldCloner extends BaseFieldCloner {
-    private PrimitiveFieldCloner() {
-        
-    }
-
     private static final Map<Class<?>, Supplier<FieldCloner>> PRIMITIVE_FIELD_CLONER =
             MapBuilder.<Class<?>, Supplier<FieldCloner>>immutable()
                     .put(int.class, IntFieldCloner::new)
@@ -24,21 +20,23 @@ final class PrimitiveFieldCloner extends BaseFieldCloner {
                     .put(float.class, FloatFieldCloner::new)
                     .put(double.class, DoubleFieldCloner::new)
                     .build();
-
     private final Map<Class<?>, FieldCloner> storage = new HashMap<>();
 
+    private PrimitiveFieldCloner() {
+
+    }
+
+    static PrimitiveFieldCloner get() {
+        return new PrimitiveFieldCloner();
+    }
 
     @Override
-    void doClone(Field field, Object from, Object to) throws IllegalAccessException, ObjectCopyException {
+    protected void doClone(Field field, Object from, Object to) throws IllegalAccessException, ObjectCopyException {
         storage.computeIfAbsent(field.getType(), this::primitiveClonerByClass)
                 .clone(field, from, to);
     }
 
     private FieldCloner primitiveClonerByClass(Class<?> clz) {
         return PRIMITIVE_FIELD_CLONER.get(clz).get();
-    }
-
-    static PrimitiveFieldCloner get() {
-        return new PrimitiveFieldCloner();
     }
 }

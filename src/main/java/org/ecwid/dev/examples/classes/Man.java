@@ -59,6 +59,10 @@ public class Man {
         return favoriteBooks;
     }
 
+    public void setFavoriteBooks(List<String> favoriteBooks) {
+        this.favoriteBooks = favoriteBooks;
+    }
+
     @Override
     public String toString() {
 
@@ -71,10 +75,6 @@ public class Man {
 
     private String objectRef(Object obj) {
         return Integer.toHexString(System.identityHashCode(obj));
-    }
-
-    public void setFavoriteBooks(List<String> favoriteBooks) {
-        this.favoriteBooks = favoriteBooks;
     }
 
 }
