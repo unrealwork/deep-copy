@@ -1,5 +1,6 @@
 package org.ecwid.dev.util;
 
+import org.ecwid.dev.copier.ObjectCopyException;
 import org.ecwid.dev.examples.classes.Man;
 import org.ecwid.dev.examples.classes.Primitives;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class CopyUtilsTest {
+final class CopyUtilsTest {
 
     public static Stream<Arguments> deepCopyTestCases() {
         Man man = new Man("test", 20, List.of("Lord of the Rings"));
@@ -38,7 +39,7 @@ class CopyUtilsTest {
     @ParameterizedTest(name = "Deep copy of {0} should be correct")
     @MethodSource("deepCopyTestCases")
     @DisplayName("Deep copy of an object should create different objects for all underlying fields of the object.")
-    void deepObjectCopy(Object src) {
+    void deepObjectCopy(Object src) throws ObjectCopyException {
         // Validate that all objects cloned during deep copy have different references.
         Object copy = CopyUtils.deepCopy(src, Assertions::assertNotSame);
         assertEquals(src, copy);
@@ -47,7 +48,7 @@ class CopyUtilsTest {
 
     @Test
     @DisplayName("Deep copy of int array should return equal array at with diff ref")
-    void deepIntArrayCopy() {
+    void deepIntArrayCopy() throws ObjectCopyException {
         int[] src = {1, 2, 3};
         int[] copy = CopyUtils.deepCopy(src);
         assertNotSame(src, copy);
@@ -56,7 +57,7 @@ class CopyUtilsTest {
 
     @Test
     @DisplayName("Deep copy of an object of class with different types of primitives should set correct values of fields in cloned object")
-    void copyPrimitiveFields() {
+    void copyPrimitiveFields() throws ObjectCopyException {
         Primitives primitives = Primitives.builder()
                 .setB(Byte.MAX_VALUE)
                 .setC('a')
@@ -73,8 +74,7 @@ class CopyUtilsTest {
     
     @Test
     @DisplayName("Deep copy of the null object")
-    void copyNull() {
-        Man man = null;
+    void copyNull() throws ObjectCopyException {
         Man copy = CopyUtils.deepCopy(null);
         assertNull(copy);
     }

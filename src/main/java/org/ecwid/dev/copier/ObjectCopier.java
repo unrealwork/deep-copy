@@ -1,11 +1,11 @@
 package org.ecwid.dev.copier;
 
-import org.ecwid.dev.event.EventEmitter;
+import org.ecwid.dev.event.BaseEventEmitter;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 
-final class ObjectCopier extends EventEmitter<Object> implements Copier {
+final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
 
     private static final Unsafe UNSAFE = getUnsafe();
     private final DeepObjectCopier copier;
@@ -18,6 +18,15 @@ final class ObjectCopier extends EventEmitter<Object> implements Copier {
         return new ObjectCopier(copier);
     }
 
+    private static Unsafe getUnsafe() {
+        try {
+            Field f = Unsafe.class.getDeclaredField("theUnsafe");
+            f.trySetAccessible();
+            return (Unsafe) f.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
 
     @Override
     public Object copy(Object obj) throws ObjectCopyException {
@@ -35,16 +44,6 @@ final class ObjectCopier extends EventEmitter<Object> implements Copier {
             throw new ObjectCopyException(obj, e);
         }
 
-    }
-
-    private static Unsafe getUnsafe() {
-        try {
-            Field f = Unsafe.class.getDeclaredField("theUnsafe");
-            f.trySetAccessible();
-            return (Unsafe) f.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new UnsupportedOperationException(e);
-        }
     }
 
 

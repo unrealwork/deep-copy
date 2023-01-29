@@ -2,6 +2,16 @@ package org.ecwid.dev.copier;
 
 import org.ecwid.dev.event.EventType;
 
+/**
+ * Describes events occurring during object's copying.
+ */
 public enum CopierEventType implements EventType {
-    OBJECT_CREATED, CLONE_COMPLETED;
+    /**
+     * New instance of object created.
+     */
+    INSTANCE_CREATED,
+    /**
+     * Full clone of object with all fields completed.
+     */
+    CLONE_COMPLETED;
 }

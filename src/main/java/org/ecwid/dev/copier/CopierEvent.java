@@ -16,6 +16,10 @@ public class CopierEvent implements Event<Object> {
         return new CopierEvent(CopierEventType.CLONE_COMPLETED, CloneData.of(obj, copy));
     }
 
+    static CopierEvent objectCreated(Object obj, Object clone) {
+        return new CopierEvent(CopierEventType.INSTANCE_CREATED, CloneData.of(obj, clone));
+    }
+
     @Override
     public EventType type() {
         return type;
@@ -24,9 +28,5 @@ public class CopierEvent implements Event<Object> {
     @Override
     public Object data() {
         return data;
-    }
-
-    static CopierEvent objectCreated(Object obj, Object clone) {
-        return new CopierEvent(CopierEventType.OBJECT_CREATED, CloneData.of(obj, clone));
     }
 }

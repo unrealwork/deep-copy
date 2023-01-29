@@ -11,6 +11,7 @@ public final class Primitives {
     private final double d;
     private final int i;
     private final char c;
+
     private Primitives(long l, boolean is, byte b, short s, float f, double d, int i, char c) {
         this.l = l;
         this.is = is;

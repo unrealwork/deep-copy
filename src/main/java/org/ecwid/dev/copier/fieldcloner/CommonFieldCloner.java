@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 final class CommonFieldCloner extends BaseFieldCloner {
     private final Copier copier;
-    
+
 
     CommonFieldCloner(Copier copier) {
         this.copier = copier;

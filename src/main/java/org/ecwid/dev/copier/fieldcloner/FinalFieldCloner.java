@@ -13,8 +13,18 @@ final class FinalFieldCloner extends BaseFieldCloner {
         this.delegateProvider = delegeate;
     }
 
+    private static Field modifiersField() {
+        try {
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.trySetAccessible();
+            return modifiersField;
+        } catch (NoSuchFieldException e) {
+            throw new UnsupportedOperationException("Unbale to provide access to final field", e);
+        }
+    }
+
     @Override
-    void doClone(Field field, Object from, Object to) throws IllegalAccessException, ObjectCopyException {
+    protected void doClone(Field field, Object from, Object to) throws IllegalAccessException, ObjectCopyException {
         final int modifiers = field.getModifiers();
         final int nonFinalModifiers = modifiers & ~Modifier.FINAL;
         Field modifiersField = modifiersField();
@@ -29,16 +39,6 @@ final class FinalFieldCloner extends BaseFieldCloner {
         } finally {
             modifiersField.setInt(field, modifiers);
             modifiersField.setAccessible(false);
-        }
-    }
-
-    private static Field modifiersField() {
-        try {
-            Field modifiersField = Field.class.getDeclaredField("modifiers");
-            modifiersField.trySetAccessible();
-            return modifiersField;
-        } catch (NoSuchFieldException e) {
-            throw new UnsupportedOperationException("Unbale to provide access to final field", e);
         }
     }
 }

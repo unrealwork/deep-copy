@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class EventEmitter<T> {
+public abstract class BaseEventEmitter<T> {
 
     private final Map<EventType, List<EventObserver<T>>> observerLists;
 
-    protected EventEmitter() {
+    protected BaseEventEmitter() {
         observerLists = new HashMap<>();
     }
 
