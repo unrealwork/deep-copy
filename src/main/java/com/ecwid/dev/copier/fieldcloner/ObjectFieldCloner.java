@@ -10,6 +10,7 @@ final class ObjectFieldCloner extends BaseFieldCloner {
 
 
     ObjectFieldCloner(Copier copier) {
+        super();
         this.copier = copier;
     }
 

@@ -16,11 +16,12 @@ final class MemoizableObjectCopier extends BaseEventEmitter<Object> implements C
     private final Factory<Object, Copier> copierFactory;
 
     MemoizableObjectCopier() {
+        super();
         memo = new IdentityHashMap<>();
         this.fieldCloner = FieldCloner.withCopier(this);
         this.copierFactory = Factory.Builders.<Object, CopierType, Copier>flyweight()
                 .addSupplier(CopierType.ARRAY, this::arrayCopier)
-                .addSupplier(CopierType.NO_OP, NoOpCopier::new)
+                .addSupplier(CopierType.NO_OP, NoOpCopier::create)
                 .addSupplier(CopierType.OBJECT, this::objectCopier)
                 .handleOrder(CopierType.NO_OP, CopierType.ARRAY, CopierType.OBJECT)
                 .build();

@@ -55,13 +55,13 @@ final class FlyweightHandlerFactory<R, S extends HandlerType<R>, T> implements H
         }
 
         public Builder<R, S, T> addSupplier(S type, Supplier<T> supplier) {
-            Builder.this.supplierMap.put(type, supplier);
+            this.supplierMap.put(type, supplier);
             return this;
         }
 
         @SafeVarargs
         public final Builder<R, S, T> handleOrder(S... handleOrder) {
-            Builder.this.handleOrder = List.of(handleOrder);
+            this.handleOrder = List.of(handleOrder);
             return this;
         }
 

@@ -6,27 +6,29 @@ import com.ecwid.dev.event.EventObserver;
 import com.ecwid.dev.event.EventType;
 
 final class CommonObjectCopier extends BaseEventEmitter<Object> implements Copier, EventObserver<Object> {
-    private final MemoizableObjectCopier delegate;
+    private final ThreadLocal<MemoizableObjectCopier> delegate;
 
     CommonObjectCopier() {
-        delegate = new MemoizableObjectCopier();
+        super();
+        delegate = ThreadLocal.withInitial(MemoizableObjectCopier::new);
     }
 
 
     @Override
     public Object copy(Object obj) throws ObjectCopyException {
-        Object copy = delegate.copy(obj);
-        delegate.clearMemo();
+        MemoizableObjectCopier copier = delegate.get();
+        Object copy = copier.copy(obj);
+        copier.clearMemo();
         return copy;
     }
 
     @Override
     public void onEvent(Event<Object> evt) {
-        delegate.onEvent(evt);
+        delegate.get().onEvent(evt);
     }
 
     @Override
     public void registerObserver(EventObserver<Object> obs, EventType type) {
-        delegate.registerObserver(obs, type);
+        delegate.get().registerObserver(obs, type);
     }
 }

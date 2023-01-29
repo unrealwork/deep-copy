@@ -5,6 +5,9 @@ import com.ecwid.dev.copier.ObjectCopyException;
 import java.lang.reflect.Field;
 
 abstract class BaseFieldCloner implements FieldCloner {
+    protected BaseFieldCloner() {
+    }
+
     @Override
     public void clone(Field field, Object src, Object dest) throws ObjectCopyException {
         try {

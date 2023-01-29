@@ -23,7 +23,7 @@ final class PrimitiveFieldCloner extends BaseFieldCloner {
     private final Map<Class<?>, FieldCloner> storage = new HashMap<>();
 
     private PrimitiveFieldCloner() {
-
+        super();
     }
 
     static PrimitiveFieldCloner get() {

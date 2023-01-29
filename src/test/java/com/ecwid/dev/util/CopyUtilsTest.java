@@ -11,6 +11,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -71,14 +74,14 @@ final class CopyUtilsTest {
         Primitives copy = CopyUtils.deepCopy(primitives);
         assertEquals(primitives, copy);
     }
-    
+
     @Test
     @DisplayName("Deep copy of the null object")
     void copyNull() throws ObjectCopyException {
         Man copy = CopyUtils.deepCopy(null);
         assertNull(copy);
     }
-    
+
     @Test
     @DisplayName("Copying method generates new object for each call")
     void copyMultipleTimes() throws ObjectCopyException {
@@ -86,5 +89,24 @@ final class CopyUtilsTest {
         Integer firstCopy = CopyUtils.deepCopy(src);
         Integer secondCopy = CopyUtils.deepCopy(src);
         assertNotSame(firstCopy, secondCopy);
+    }
+
+    @Test
+    @DisplayName("Copying object in parallel should create new object for each thread")
+    void copyInParallel() {
+        Integer src = 1;
+        int copyCount = 10;
+        Map<Integer, Integer> map = new ConcurrentHashMap<>();
+        IntStream.range(0, copyCount)
+                .parallel()
+                .forEach(i -> {
+                    try {
+                        Integer copy = CopyUtils.deepCopy(src);
+                        map.merge(System.identityHashCode(copy),1, Integer::sum);
+                    } catch (ObjectCopyException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        Assertions.assertEquals(copyCount, map.size());
     }
 }

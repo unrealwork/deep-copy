@@ -8,6 +8,7 @@ final class ArrayCopier extends BaseEventEmitter<Object> implements Copier {
     private final Copier objectCopier;
 
     private ArrayCopier(Copier objectCopier) {
+        super();
         this.objectCopier = objectCopier;
     }
 

@@ -10,6 +10,7 @@ final class FinalFieldCloner extends BaseFieldCloner {
     private final Function<Field, FieldCloner> delegateProvider;
 
     FinalFieldCloner(Function<Field, FieldCloner> delegeate) {
+        super();
         this.delegateProvider = delegeate;
     }
 
@@ -32,9 +33,6 @@ final class FinalFieldCloner extends BaseFieldCloner {
             modifiersField.setInt(field, nonFinalModifiers);
             field.trySetAccessible();
             FieldCloner delegate = delegateProvider.apply(field);
-            if (delegate == this) {
-                throw new IllegalAccessException();
-            }
             delegate.clone(field, from, to);
         } finally {
             modifiersField.setInt(field, modifiers);

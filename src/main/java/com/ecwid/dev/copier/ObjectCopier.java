@@ -12,6 +12,7 @@ final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
     private final FieldCloner fieldCloner;
 
     ObjectCopier(FieldCloner fieldClonerFactory) {
+        super();
         this.fieldCloner = fieldClonerFactory;
     }
 

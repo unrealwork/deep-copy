@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseEventEmitter<T> {
+public class BaseEventEmitter<T> {
 
     private final Map<EventType, List<EventObserver<T>>> observerLists;
 

@@ -11,6 +11,14 @@ public final class CopyUtils {
     private CopyUtils() {
     }
 
+    /**
+     * Make deep copy of object
+     *
+     * @param obj instance of object of type T
+     * @param <T> type of object.
+     * @return copied object
+     * @throws ObjectCopyException in case of error during copy
+     */
     public static <T> T deepCopy(T obj) throws ObjectCopyException {
         return (T) DEFAULT_COPIER.copy(obj);
     }
