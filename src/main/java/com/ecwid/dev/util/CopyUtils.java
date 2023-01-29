@@ -12,7 +12,7 @@ public final class CopyUtils {
     }
 
     /**
-     * Make deep copy of object
+     * Make deep copy of an object
      *
      * @param obj instance of object of type T
      * @param <T> type of object.
@@ -23,6 +23,15 @@ public final class CopyUtils {
         return (T) DEFAULT_COPIER.copy(obj);
     }
 
+    /**
+     * Make deep copy of an object with callback on each clone completed during the process
+     *
+     * @param obj           object to clone
+     * @param cloneCallback - callback for completed clone.
+     * @param <T>           type of object
+     * @return cloned object
+     * @throws ObjectCopyException in case of error related to object copying process
+     */
     public static <T> T deepCopy(T obj, BiConsumer<Object, Object> cloneCallback) throws ObjectCopyException {
         return (T) Copier.create(cloneCallback).copy(obj);
     }
