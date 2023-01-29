@@ -14,7 +14,7 @@ public abstract class BaseEventEmitter<T> {
         observerLists = new HashMap<>();
     }
 
-    public final void registerObserver(EventObserver<T> obs, EventType type) {
+    public void registerObserver(EventObserver<T> obs, EventType type) {
         observerLists.computeIfAbsent(type, t -> new ArrayList<>())
                 .add(obs);
     }

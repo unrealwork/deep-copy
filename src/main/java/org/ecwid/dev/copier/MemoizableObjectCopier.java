@@ -1,6 +1,6 @@
 package org.ecwid.dev.copier;
 
-import org.ecwid.dev.copier.fieldcloner.FieldClonerFactory;
+import org.ecwid.dev.copier.fieldcloner.FieldCloner;
 import org.ecwid.dev.event.BaseEventEmitter;
 import org.ecwid.dev.event.Event;
 import org.ecwid.dev.event.EventObserver;
@@ -13,15 +13,15 @@ import static org.ecwid.dev.copier.CopierType.ARRAY;
 import static org.ecwid.dev.copier.CopierType.NO_OP;
 import static org.ecwid.dev.copier.CopierType.OBJECT;
 
-final class DeepObjectCopier extends BaseEventEmitter<Object> implements Copier, EventObserver<Object> {
+final class MemoizableObjectCopier extends BaseEventEmitter<Object> implements Copier, EventObserver<Object> {
 
     private final Map<Object, Object> memo;
-    private final FieldClonerFactory fieldClonerFactory;
+    private final FieldCloner fieldCloner;
     private final Factory<Object, Copier> copierFactory;
 
-    DeepObjectCopier() {
+    MemoizableObjectCopier() {
         memo = new IdentityHashMap<>();
-        fieldClonerFactory = FieldClonerFactory.withCopier(this);
+        this.fieldCloner = FieldCloner.withCopier(this);
         this.copierFactory = Factory.Builders.<Object, CopierType, Copier>flyweight()
                 .addSupplier(ARRAY, this::arrayCopier)
                 .addSupplier(NO_OP, NoOpCopier::new)
@@ -51,10 +51,6 @@ final class DeepObjectCopier extends BaseEventEmitter<Object> implements Copier,
         return memo.computeIfAbsent(obj, this::copyRec);
     }
 
-    FieldClonerFactory getFieldClonerFactory() {
-        return fieldClonerFactory;
-    }
-
     @Override
     public void onEvent(Event<Object> evt) {
         if (evt.type() == CopierEventType.INSTANCE_CREATED) {
@@ -66,8 +62,12 @@ final class DeepObjectCopier extends BaseEventEmitter<Object> implements Copier,
         }
     }
 
+    void clearMemo() {
+        this.memo.clear();
+    }
+
     private ObjectCopier objectCopier() {
-        ObjectCopier objectCopier = ObjectCopier.withObjectCopier(this);
+        ObjectCopier objectCopier = ObjectCopier.withFieldCloner(fieldCloner);
         objectCopier.registerObserver(this, CopierEventType.INSTANCE_CREATED);
         objectCopier.registerObserver(this, CopierEventType.CLONE_COMPLETED);
         return objectCopier;

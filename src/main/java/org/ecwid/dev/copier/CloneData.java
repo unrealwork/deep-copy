@@ -1,6 +1,6 @@
 package org.ecwid.dev.copier;
 
-public final class CloneData {
+final class CloneData {
     private final Object object;
     private final Object copy;
 
@@ -9,15 +9,15 @@ public final class CloneData {
         this.copy = copy;
     }
 
-    public static CloneData of(Object object, Object copy) {
+    static CloneData create(Object object, Object copy) {
         return new CloneData(object, copy);
     }
 
-    public Object getObject() {
+    Object getObject() {
         return object;
     }
 
-    public Object getCopy() {
+     Object getCopy() {
         return copy;
     }
 }

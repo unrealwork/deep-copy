@@ -3,7 +3,7 @@ package org.ecwid.dev.copier;
 import org.ecwid.dev.event.Event;
 import org.ecwid.dev.event.EventType;
 
-public class CopierEvent implements Event<Object> {
+final class CopierEvent implements Event<Object> {
     private final Object data;
     private final CopierEventType type;
 
@@ -13,11 +13,11 @@ public class CopierEvent implements Event<Object> {
     }
 
     public static Event<Object> cloneCompleted(Object obj, Object copy) {
-        return new CopierEvent(CopierEventType.CLONE_COMPLETED, CloneData.of(obj, copy));
+        return new CopierEvent(CopierEventType.CLONE_COMPLETED, CloneData.create(obj, copy));
     }
 
     static CopierEvent objectCreated(Object obj, Object clone) {
-        return new CopierEvent(CopierEventType.INSTANCE_CREATED, CloneData.of(obj, clone));
+        return new CopierEvent(CopierEventType.INSTANCE_CREATED, CloneData.create(obj, clone));
     }
 
     @Override

@@ -78,4 +78,13 @@ final class CopyUtilsTest {
         Man copy = CopyUtils.deepCopy(null);
         assertNull(copy);
     }
+    
+    @Test
+    @DisplayName("Copying method generates new object for each call")
+    void copyMultipleTimes() throws ObjectCopyException {
+        Integer src = 1;
+        Integer firstCopy = CopyUtils.deepCopy(src);
+        Integer secondCopy = CopyUtils.deepCopy(src);
+        assertNotSame(firstCopy, secondCopy);
+    }
 }
