@@ -6,7 +6,7 @@ Deep Copy implement deep copy of an object via reflection according to [task](ht
 
 ## Usage
 
-Example of usage is shown in [`org.ecwid.dev.examples.Demo`](https://github.com/unrealwork/deep-copy/blob/master/src/main/java/org/ecwid/dev/examples/Demo.java) class.
+Example of usage is shown in [`com.ecwid.dev.examples.Demo`](https://github.com/unrealwork/deep-copy/blob/master/src/main/java/com/ecwid/dev/examples/Demo.java) class.
 
 ### App output
 
