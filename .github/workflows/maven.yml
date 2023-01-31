@@ -31,5 +31,7 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Execute Demo
-        run: java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy --add-opens=java.base/java.util=com.ecwid.dev.deep.copy target/classes -m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo
+      - name: Execute Demo via java
+        run: java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy --add-opens=java.base/java.util=com.ecwid.dev.deep.copy -p target/classes -m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo
+      - name: Execute Demo via Maven
+        run: mvn exec:exec

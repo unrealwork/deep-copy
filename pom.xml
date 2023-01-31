@@ -37,14 +37,23 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
+          <executable>java</executable>
           <arguments>
-            <argument>--add-opens</argument>
-            <argument>java.base/java.util=${lib.module.name}</argument>
-            <argument>--add-opens</argument>
-            <argument>java.base/java.lang=${lib.module.name}</argument>
+            <argument>--add-opens=java.base/java.util=${lib.module.name}</argument>
+            <argument>--add-opens=java.base/java.lang=${lib.module.name}</argument>
+            <argument>-p</argument>
+            <argument>${project.build.directory}/classes</argument>
+            <argument>-m</argument>
+            <argument>com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo</argument>
           </arguments>
-          <mainClass>com.ecwid.dev.examples.Demo</mainClass>
         </configuration>
       </plugin>
       <plugin>
