@@ -12,7 +12,10 @@ Due to security of modular system in the latest JDKs closed classes of modules s
 It could be done via `--add-opens=<module>/<package>` option of java executable, for example:
 
 ```bash
-java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy --add-opens=java.base/java.util=com.ecwid.dev.deep.copy -p target/classes -m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo
+java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy \
+--add-opens=java.base/java.util=com.ecwid.dev.deep.copy \
+-p target/classes \
+-m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo
 ```
 
 Example of usage is shown in [`com.ecwid.dev.examples.Demo`](https://github.com/unrealwork/deep-copy/blob/master/src/main/java/com/ecwid/dev/examples/Demo.java) class.
