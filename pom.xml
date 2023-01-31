@@ -17,6 +17,7 @@
     <maven-surefire.version>3.0.0-M7</maven-surefire.version>
     <exec-maven.version>3.0.0</exec-maven.version>
     <junit-jupiter.version>5.9.2</junit-jupiter.version>
+    <lib.module.name>com.ecwid.dev.deep.copy</lib.module.name>
   </properties>
 
   <dependencies>
@@ -30,19 +31,31 @@
     <!-- ... -->
   </dependencies>
   <build>
-    
+
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven.version}</version>
         <configuration>
+          <arguments>
+            <argument>--add-opens</argument>
+            <argument>java.base/java.util=${lib.module.name}</argument>
+            <argument>--add-opens</argument>
+            <argument>java.base/java.lang=${lib.module.name}</argument>
+          </arguments>
           <mainClass>com.ecwid.dev.examples.Demo</mainClass>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire.version}</version>
+        <configuration>
+          <argLine>
+            --add-opens=java.base/java.util=${lib.module.name}
+            --add-opens=java.base/java.lang=${lib.module.name}
+          </argLine>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
@@ -50,5 +63,5 @@
       </plugin>
     </plugins>
   </build>
-  
+
 </project>

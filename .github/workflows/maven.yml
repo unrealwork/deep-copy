@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '8', '11', '17' ]
+        java: [ '11', '17' ]
     name: Verify on JDK ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v3
@@ -32,4 +32,4 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Execute Demo
-        run: mvn compile exec:java
+        run: java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy --add-opens=java.base/java.util=com.ecwid.dev.deep.copy target/classes -m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo

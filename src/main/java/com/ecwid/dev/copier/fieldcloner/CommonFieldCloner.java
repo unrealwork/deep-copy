@@ -12,11 +12,11 @@ class CommonFieldCloner implements FieldCloner {
 
     CommonFieldCloner(Copier copier) {
         fieldClonerFactory = Factory.Builders.<Field, FieldClonerType, FieldCloner>flyweight(FieldClonerType.class)
-                .addSupplier(FieldClonerType.FINAL, this::finalFieldCloner)
+                .addSupplier(FieldClonerType.NO_OP, this::finalFieldCloner)
                 .addSupplier(FieldClonerType.PRIMITIVE, PrimitiveFieldCloner::get)
                 .addSupplier(FieldClonerType.COMMON, this::commonCopyCloner)
                 .addSupplier(FieldClonerType.REF_COPY, this::refCopyCloner)
-                .handleOrder(FieldClonerType.FINAL, FieldClonerType.PRIMITIVE, FieldClonerType.REF_COPY, FieldClonerType.COMMON)
+                .handleOrder(FieldClonerType.NO_OP, FieldClonerType.PRIMITIVE, FieldClonerType.REF_COPY, FieldClonerType.COMMON)
                 .build();
         this.copier = copier;
     }
@@ -35,6 +35,6 @@ class CommonFieldCloner implements FieldCloner {
     }
 
     private FieldCloner finalFieldCloner() {
-        return new FinalFieldCloner(fieldClonerFactory::get);
+        return new NoopFieldCloner();
     }
 }
