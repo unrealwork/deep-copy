@@ -1,7 +1,7 @@
 package com.ecwid.dev.copier.fieldcloner;
 
-import com.ecwid.dev.copier.ObjectCopyException;
 import com.ecwid.dev.copier.Copier;
+import com.ecwid.dev.copier.ObjectCopyException;
 import com.ecwid.dev.factory.Factory;
 
 import java.lang.reflect.Field;
@@ -11,7 +11,7 @@ class CommonFieldCloner implements FieldCloner {
     private final Copier copier;
 
     CommonFieldCloner(Copier copier) {
-        fieldClonerFactory = Factory.Builders.<Field, FieldClonerType, FieldCloner>flyweight()
+        fieldClonerFactory = Factory.Builders.<Field, FieldClonerType, FieldCloner>flyweight(FieldClonerType.class)
                 .addSupplier(FieldClonerType.FINAL, this::finalFieldCloner)
                 .addSupplier(FieldClonerType.PRIMITIVE, PrimitiveFieldCloner::get)
                 .addSupplier(FieldClonerType.COMMON, this::commonCopyCloner)
