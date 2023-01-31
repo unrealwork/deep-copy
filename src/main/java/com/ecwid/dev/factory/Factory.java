@@ -30,8 +30,8 @@ public interface Factory<S, T> {
          * @param <T> type of retrieved object
          * @return instance of provided object
          */
-        public static <R, S extends HandlerType<R>, T> FlyweightHandlerFactory.Builder<R, S, T> flyweight() {
-            return FlyweightHandlerFactory.builder();
+        public static <R, S extends Enum<S> & HandlerType<R>, T> FlyweightHandlerFactory.Builder<R, S, T> flyweight(Class<S> clz) {
+            return FlyweightHandlerFactory.builder(clz);
         }
     }
 }
