@@ -24,28 +24,29 @@ Example of usage is shown in [`com.ecwid.dev.examples.Demo`](https://github.com/
 ### App
 
 ```java
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashMap.Node@6ab55cbc-> java.util.HashMap.Node@2d4c8c11
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashMap.Node[]@52b5b1fc-> java.util.HashMap.Node[]@2a36f2ee
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashMap@6435bb7d-> java.util.HashMap@528712e1
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashSet@51140842-> java.util.HashSet@557dc8eb
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : byte[]@48c1e128-> byte[]@761796fb
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.lang.String@37fb7e05-> java.lang.String@60634640
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : byte[]@5a82c8f8-> byte[]@1c716d07
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.lang.String@2a09b4f9-> java.lang.String@66da698f
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.ImmutableCollections.List12@12c24604-> java.util.ImmutableCollections.List12@113b7d1
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : org.ecwid.dev.examples.classes.Man@55c5fe5-> org.ecwid.dev.examples.classes.Man@4d9a7a03
-Jan 28, 2023 3:58:44 AM org.ecwid.dev.examples.Demo main
-INFO: Deep copied object: Man@4d9a7a03{age=20, name@60634640='test', favoriteBooks@113b7d1=[Lord of the Rings]}
+INFO: Deep copy is being started for object : Man@573f2bb1{age=20, name@5ae9a829='test', favoriteBooks@6d8a00e3=[Lord of the Rings]}
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.util.HashMap.Node@4493d195-> java.util.HashMap.Node@4232c52b
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.util.HashMap.Node[]@704a52ec-> java.util.HashMap.Node[]@69a3d1d
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.util.HashMap@76f2b07d-> java.util.HashMap@2a556333
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.util.HashSet@536aaa8d-> java.util.HashSet@7d70d1b1
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : byte[]@2a742aa2-> byte[]@3cb1ffe6
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.lang.String@5ae9a829-> java.lang.String@467aecef
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : byte[]@7e2d773b-> byte[]@2173f6d9
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.lang.String@4d50efb8-> java.lang.String@307f6b8c
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : java.util.ImmutableCollections.List12@6d8a00e3-> java.util.ImmutableCollections.List12@7a187f14
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
+INFO: Clone completed : com.ecwid.dev.examples.classes.Man@573f2bb1-> com.ecwid.dev.examples.classes.Man@6f195bc3
+Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo main
+INFO: Deep copied object: Man@6f195bc3{age=20, name@467aecef='test', favoriteBooks@7a187f14=[Lord of the Rings]}
 ```
 
 ### Run
