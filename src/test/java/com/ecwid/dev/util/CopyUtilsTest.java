@@ -4,6 +4,7 @@ import com.ecwid.dev.copier.ObjectCopyException;
 import com.ecwid.dev.examples.classes.Cat;
 import com.ecwid.dev.examples.classes.Man;
 import com.ecwid.dev.examples.classes.Primitives;
+import com.ecwid.dev.examples.classes.TestRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,8 @@ final class CopyUtilsTest {
                 arguments('a'),
                 arguments(ParameterizedTest.class),
                 arguments(new Integer[] {1, 2, 3}),
-                arguments(new Cat())
+                arguments(new Cat()),
+                arguments(new TestRecord(1))
         );
     }
 

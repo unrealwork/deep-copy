@@ -19,7 +19,7 @@ enum CopierType implements HandlerType<Object> {
     /**
      * No operation copy, just copy ref of an object.
      */
-    NO_OP(clz -> clz.isSynthetic() || clz.isEnum() || clz.isAssignableFrom(Class.class));
+    NO_OP(clz -> clz.isSynthetic() || clz.isEnum() || clz.isRecord() || clz.isAssignableFrom(Class.class));
     private final Predicate<Class<?>> handlePredicate;
 
     CopierType(Predicate<Class<?>> handlePredicate) {
