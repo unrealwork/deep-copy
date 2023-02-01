@@ -1,4 +1,4 @@
-package com.ecwid.dev.examples.classes;
+package com.ecwid.dev.util;
 
 import java.util.HashSet;
 import java.util.List;

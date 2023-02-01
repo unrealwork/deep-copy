@@ -6,71 +6,11 @@
 
   <groupId>com.ecwid</groupId>
   <artifactId>deep-copy</artifactId>
+  <packaging>pom</packaging>
   <version>0.0.1</version>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven-failsafe.version>3.0.0-M7</maven-failsafe.version>
-    <maven-surefire.version>3.0.0-M7</maven-surefire.version>
-    <exec-maven.version>3.0.0</exec-maven.version>
-    <junit-jupiter.version>5.9.2</junit-jupiter.version>
-    <lib.module.name>com.ecwid.dev.deep.copy</lib.module.name>
-  </properties>
-
-  <dependencies>
-    <!-- ... -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>${junit-jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- ... -->
-  </dependencies>
-  <build>
-
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>${exec-maven.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>--add-opens=java.base/java.util=${lib.module.name}</argument>
-            <argument>--add-opens=java.base/java.lang=${lib.module.name}</argument>
-            <argument>-p</argument>
-            <argument>${project.build.directory}/classes</argument>
-            <argument>-m</argument>
-            <argument>com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo</argument>
-          </arguments>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire.version}</version>
-        <configuration>
-          <argLine>
-            --add-opens=java.base/java.util=${lib.module.name}
-            --add-opens=java.base/java.lang=${lib.module.name}
-          </argLine>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${maven-failsafe.version}</version>
-      </plugin>
-    </plugins>
-  </build>
-
+  <modules>
+    <module>deep-copy-demo</module>
+    <module>deep-copy-core</module>
+  </modules>
+  
 </project>

@@ -1,10 +1,9 @@
-package com.ecwid.dev.examples;
+package com.ecwid.dev.demo;
 
+import com.ecwid.dev.copier.Copier;
 import com.ecwid.dev.copier.ObjectCopyException;
-import com.ecwid.dev.examples.classes.Man;
 import com.ecwid.dev.util.CopyUtils;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 public final class Demo {
@@ -14,11 +13,11 @@ public final class Demo {
     }
 
     public static void main(String[] args) throws ObjectCopyException {
-        Man man = new Man("test", 20, List.of("Lord of the Rings"));
-        man.addFriend(man);
-        LOGGER.info(() -> "Deep copy is being started for object : " + man);
-        Man copy = CopyUtils.deepCopy(man, Demo::logObjectClone);
+        Copier copier = CopyUtils.deepCopy(Copier.create(Demo::logObjectClone));
+        LOGGER.info(() -> "Deep copy is being started for object : " + copier);
+        Copier copy = (Copier) copier.copy(copier);
         LOGGER.info(() -> "Deep copied object: " + copy);
+        
     }
 
     private static void logObjectClone(Object src, Object clone) {
