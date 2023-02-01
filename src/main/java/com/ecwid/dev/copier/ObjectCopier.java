@@ -5,6 +5,9 @@ import com.ecwid.dev.event.BaseEventEmitter;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
 
@@ -36,7 +39,7 @@ final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
             final Class<?> aClass = obj.getClass();
             Object copy = UNSAFE.allocateInstance(aClass);
             notifyObservers(CopierEvent.objectCreated(obj, copy));
-            Field[] fields = aClass.getDeclaredFields();
+            List<Field> fields = collectFields(aClass);
             for (Field field : fields) {
                 fieldCloner.clone(field, obj, copy);
             }
@@ -45,6 +48,15 @@ final class ObjectCopier extends BaseEventEmitter<Object> implements Copier {
         } catch (InstantiationException e) {
             throw new ObjectCopyException(obj, e);
         }
+    }
 
+    private List<Field> collectFields(Class<?> clz) {
+        List<Field> res = new ArrayList<>();
+        Class<?> curClass = clz;
+        do {
+            Collections.addAll(res, curClass.getDeclaredFields());
+            curClass = curClass.getSuperclass();
+        } while (curClass != null);
+        return res;
     }
 }
