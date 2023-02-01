@@ -10,7 +10,7 @@ enum FieldClonerType implements HandlerType<Field> {
     /**
      * For handler of final fields
      */
-    FINAL(f -> Modifier.isFinal(f.getModifiers())),
+    NO_OP(f -> Modifier.isStatic(f.getModifiers()) && Modifier.isFinal(f.getModifiers())),
     /**
      * For handler of primitive fields
      */
