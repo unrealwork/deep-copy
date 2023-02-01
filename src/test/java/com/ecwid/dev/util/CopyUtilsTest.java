@@ -1,6 +1,7 @@
 package com.ecwid.dev.util;
 
 import com.ecwid.dev.copier.ObjectCopyException;
+import com.ecwid.dev.examples.classes.Cat;
 import com.ecwid.dev.examples.classes.Man;
 import com.ecwid.dev.examples.classes.Primitives;
 import org.junit.jupiter.api.Assertions;
@@ -32,12 +33,14 @@ final class CopyUtilsTest {
         return Stream.of(
                 arguments(man),
                 arguments("Test"),
-                arguments(List.of(1, 2, 3)), 
-                arguments(1), 
-                arguments(Boolean.TRUE), 
-                arguments('a'), 
-                arguments(ParameterizedTest.class), 
-                arguments(new Integer[] {1, 2, 3}));
+                arguments(List.of(1, 2, 3)),
+                arguments(1),
+                arguments(Boolean.TRUE),
+                arguments('a'),
+                arguments(ParameterizedTest.class),
+                arguments(new Integer[] {1, 2, 3}),
+                arguments(new Cat())
+        );
     }
 
     @ParameterizedTest(name = "Deep copy of {0} should be correct")
