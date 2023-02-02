@@ -25,19 +25,17 @@ In that case the message contains hint, how to provide access to some class.
 
 ## Demo App
 
-Example of library usage shown in `deep-copy-demo` project.
-
-Demo uses `deep-copy-core` library as dependency.
-
-Main class of the app is [com.ecwid.dev.deep.copy.demo.Demo](deep-copy-demo/src/main/java/com/ecwid/dev/deep/copy/demo/Demo.java)
+- Example of library usage shown in `deep-copy-demo` project.
+- Demo uses `deep-copy-core` library as dependency.
+- Main class of the app is [com.ecwid.dev.deep.copy.demo.Demo](deep-copy-demo/src/main/java/com/ecwid/dev/deep/copy/demo/Demo.java)
 
 ### Run
 
-Demo could be packaged as an executable jar `demo.jar` and run via CLI.
-
-```bash
-java -jar deep-copy-demo/target/demo.jar
-```
+- Demo could be packaged as an executable jar `demo.jar` and run via CLI.
+  ```bash
+  mvn package
+  java -jar deep-copy-demo/target/demo.jar
+  ```
 
 ### Output of the app
 
