@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>deep-copy</artifactId>
+    <groupId>com.ecwid</groupId>
+    <version>0.0.1</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>jar</packaging>
+  <artifactId>deep-copy-core</artifactId>
+  
+  <properties>
+    <maven-failsafe.version>3.0.0-M7</maven-failsafe.version>
+    <maven-surefire.version>3.0.0-M7</maven-surefire.version>
+    <junit-jupiter.version>5.9.2</junit-jupiter.version>
+  </properties>
+
+  <dependencies>
+    <!-- ... -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- ... -->
+  </dependencies>
+  
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire.version}</version>
+        <configuration>
+          <argLine>
+            --add-opens=java.base/java.util=${lib.module.name}
+            --add-opens=java.base/java.lang=${lib.module.name}
+          </argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${maven-failsafe.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+  <repositories>
+    
+  </repositories>
+</project>

@@ -2,65 +2,68 @@
 
 [![Java CI with Maven](https://github.com/unrealwork/deep-copy/actions/workflows/maven.yml/badge.svg)](https://github.com/unrealwork/deep-copy/actions/workflows/maven.yml)
 
-Deep Copy implement deep copy of an object via reflection according to [task](https://github.com/Ecwid/new-job/blob/master/Deep-clone.md).
+Deep Copy implement deep copy of an object via reflection according
+to [task](https://github.com/Ecwid/new-job/blob/master/Deep-clone.md).
+
 ## Usage
 
-`CopyUtils` class is provided in `com.ecwid.dev.deep.copy` module.
+Library itself is placed in `deep-copy-core` project and java `com.ecwid.dev.deep.copy` module.
+
+Main utility methods are contained in [`CopyUtils`](deep-copy-core/src/main/java/com/ecwid/dev/util/CopyUtils.java)
 
 Due to security of modular system in the latest JDKs closed classes of modules should be opened to the library module.
 
-It could be done via `--add-opens=<module>/<package>` option of java executable, for example:
+It's possible that access to class of a copied object is restricted, warning message is shown and the original object will be returned.
 
-```bash
-java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy \
---add-opens=java.base/java.util=com.ecwid.dev.deep.copy \
--p target/classes \
--m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo
+```
+WARNING:Unable to access package java.util of module java.base. 
+Consider to add `--add-opens=java.base/java.util=com.ecwid.dev.deep.copy`
+VM option to make class java.util.HashSet available for copying.
 ```
 
-Example of usage is shown in [`com.ecwid.dev.examples.Demo`](https://github.com/unrealwork/deep-copy/blob/master/src/main/java/com/ecwid/dev/examples/Demo.java) class.
+In that case the message contains hint, how to provide access to some class.
 
+## Demo App
 
-### App
+Example of library usage shown in `deep-copy-demo` project.
 
-```java
-INFO: Deep copy is being started for object : Man@573f2bb1{age=20, name@5ae9a829='test', favoriteBooks@6d8a00e3=[Lord of the Rings]}
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashMap.Node@4493d195-> java.util.HashMap.Node@4232c52b
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashMap.Node[]@704a52ec-> java.util.HashMap.Node[]@69a3d1d
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashMap@76f2b07d-> java.util.HashMap@2a556333
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.HashSet@536aaa8d-> java.util.HashSet@7d70d1b1
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : byte[]@2a742aa2-> byte[]@3cb1ffe6
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.lang.String@5ae9a829-> java.lang.String@467aecef
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : byte[]@7e2d773b-> byte[]@2173f6d9
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.lang.String@4d50efb8-> java.lang.String@307f6b8c
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : java.util.ImmutableCollections.List12@6d8a00e3-> java.util.ImmutableCollections.List12@7a187f14
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo logObjectClone
-INFO: Clone completed : com.ecwid.dev.examples.classes.Man@573f2bb1-> com.ecwid.dev.examples.classes.Man@6f195bc3
-Jan 31, 2023 8:20:35 PM com.ecwid.dev.examples.Demo main
-INFO: Deep copied object: Man@6f195bc3{age=20, name@467aecef='test', favoriteBooks@7a187f14=[Lord of the Rings]}
-```
+Demo uses `deep-copy-core` library as dependency.
+
+Main class of the app is [com.ecwid.dev.deep.copy.demo.Demo](deep-copy-demo/src/main/java/com/ecwid/dev/deep/copy/demo/Demo.java)
 
 ### Run
-Demo could be executed via maven
+
+Demo could be packaged as an executable jar `demo.jar` and run via CLI.
 
 ```bash
-mvn compile exec:exec
+java -jar deep-copy-demo/target/demo.jar
 ```
 
-Or via java executable
+### Output of the app
 
 ```bash
-java --add-opens=java.base/java.lang=com.ecwid.dev.deep.copy --add-opens=java.base/java.util=com.ecwid.dev.deep.copy -p target/classes -m com.ecwid.dev.deep.copy/com.ecwid.dev.examples.Demo
+Feb 02, 2023 11:27:22 AM com.ecwid.dev.deep.copy.demo.Demo main
+INFO: Deep copy is being started for object : Man@4783da3f{age=20, name@378fd1ac='test', favoriteBooks@49097b5d=[Lord of the Rings]}
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.util.HashMap.Node@515f550a-> java.util.HashMap.Node@379619aa
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.util.HashMap.Node[]@1eb44e46-> java.util.HashMap.Node[]@cac736f
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.util.HashMap@75a1cd57-> java.util.HashMap@123a439b
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.util.HashSet@c2e1f26-> java.util.HashSet@7de26db8
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : byte[]@1175e2db-> byte[]@36aa7bc2
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.lang.String@378fd1ac-> java.lang.String@26f0a63f
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : byte[]@4926097b-> byte[]@762efe5d
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.lang.String@7637f22-> java.lang.String@5d22bbb7
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : java.util.ImmutableCollections.List12@49097b5d-> java.util.ImmutableCollections.List12@3830f1c0
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo logObjectClone
+INFO: Clone completed : com.ecwid.dev.deep.copy.demo.classes.Man@4783da3f-> com.ecwid.dev.deep.copy.demo.classes.Man@39ed3c8d
+Feb 02, 2023 11:27:23 AM com.ecwid.dev.deep.copy.demo.Demo main
+INFO: Deep copied object: Man@39ed3c8d{age=20, name@26f0a63f='test', favoriteBooks@3830f1c0=[Lord of the Rings]}
 ```
-
-
-
