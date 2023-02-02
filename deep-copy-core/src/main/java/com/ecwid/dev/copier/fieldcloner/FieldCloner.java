@@ -26,5 +26,5 @@ public interface FieldCloner {
      * @param dest  destination object
      * @throws ObjectCopyException in case of error during copying process
      */
-    void clone(Field field, Object src, Object dest) throws ObjectCopyException;
+    void clone(Field field, Object src, Object dest) throws ObjectCopyException, IllegalAccessException;
 }

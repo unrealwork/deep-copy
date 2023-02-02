@@ -3,18 +3,19 @@ package com.ecwid.dev.copier.fieldcloner;
 import com.ecwid.dev.copier.exceptions.ObjectCopyException;
 
 import java.lang.reflect.Field;
+import java.util.logging.Logger;
 
 abstract class BaseFieldCloner implements FieldCloner {
+    private final Logger logger;
+
     protected BaseFieldCloner() {
+        logger = Logger.getLogger(getClass().getCanonicalName());
     }
 
     @Override
-    public void clone(Field field, Object src, Object dest) throws ObjectCopyException {
-        try {
-            field.trySetAccessible();
+    public void clone(Field field, Object src, Object dest) throws ObjectCopyException, IllegalAccessException {
+        if (field.trySetAccessible()) {
             doClone(field, src, dest);
-        } catch (IllegalAccessException e) {
-            throw new ObjectCopyException(field, src, e);
         }
     }
 

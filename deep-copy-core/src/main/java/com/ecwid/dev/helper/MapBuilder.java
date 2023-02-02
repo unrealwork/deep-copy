@@ -1,4 +1,4 @@
-package com.ecwid.dev.util;
+package com.ecwid.dev.helper;
 
 import java.util.Collections;
 import java.util.HashMap;

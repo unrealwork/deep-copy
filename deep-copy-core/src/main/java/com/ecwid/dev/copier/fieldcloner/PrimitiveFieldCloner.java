@@ -1,7 +1,7 @@
 package com.ecwid.dev.copier.fieldcloner;
 
 import com.ecwid.dev.copier.exceptions.ObjectCopyException;
-import com.ecwid.dev.util.MapBuilder;
+import com.ecwid.dev.helper.MapBuilder;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

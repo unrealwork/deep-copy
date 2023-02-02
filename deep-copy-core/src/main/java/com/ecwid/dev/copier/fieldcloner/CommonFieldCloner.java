@@ -22,7 +22,7 @@ class CommonFieldCloner implements FieldCloner {
     }
 
     @Override
-    public void clone(Field field, Object src, Object dest) throws ObjectCopyException {
+    public void clone(Field field, Object src, Object dest) throws ObjectCopyException, IllegalAccessException {
         fieldClonerFactory.get(field).clone(field, src, dest);
     }
 
