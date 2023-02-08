@@ -11,43 +11,4 @@
   <packaging>jar</packaging>
   <artifactId>deep-copy-core</artifactId>
   
-  <properties>
-    <maven-failsafe.version>3.0.0-M7</maven-failsafe.version>
-    <maven-surefire.version>3.0.0-M7</maven-surefire.version>
-    <junit-jupiter.version>5.9.2</junit-jupiter.version>
-  </properties>
-
-  <dependencies>
-    <!-- ... -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>${junit-jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- ... -->
-  </dependencies>
-  
-  
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire.version}</version>
-        <configuration>
-          <argLine>
-            --add-opens=java.base/java.util=${lib.module.name}
-            --add-opens=java.base/java.lang=${lib.module.name}
-          </argLine>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${maven-failsafe.version}</version>
-      </plugin>
-    </plugins>
-  </build>
-  <repositories>
-    
-  </repositories>
 </project>

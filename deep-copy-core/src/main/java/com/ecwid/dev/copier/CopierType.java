@@ -4,6 +4,8 @@ import com.ecwid.dev.factory.HandlerType;
 
 import java.util.function.Predicate;
 
+import static java.util.function.Predicate.not;
+
 /**
  * Types of copier that could handle copying process
  */
@@ -15,11 +17,13 @@ enum CopierType implements HandlerType<Object> {
     /**
      * Generic handler for object
      */
-    OBJECT(clz -> true),
+    NO_OP(clz -> clz.isSynthetic() || clz.isEnum() || clz.isRecord() || clz.isAssignableFrom(Class.class)),
     /**
      * No operation copy, just copy ref of an object.
      */
-    NO_OP(clz -> clz.isSynthetic() || clz.isEnum() || clz.isRecord() || clz.isAssignableFrom(Class.class));
+    OBJECT(clz -> not(ARRAY.handlePredicate)
+            .and(not(NO_OP.handlePredicate))
+            .test(clz));
     private final Predicate<Class<?>> handlePredicate;
 
     CopierType(Predicate<Class<?>> handlePredicate) {

@@ -1,11 +1,12 @@
 package com.ecwid.dev.deep.copy.demo;
 
 import com.ecwid.dev.copier.exceptions.ObjectCopyException;
-import com.ecwid.dev.deep.copy.demo.classes.Man;
 import com.ecwid.dev.util.CopyUtils;
 
-import java.util.List;
+import java.util.LinkedList;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Demo {
     private static final Logger LOGGER = Logger.getLogger(Demo.class.getCanonicalName());
@@ -14,11 +15,19 @@ public final class Demo {
     }
 
     public static void main(String[] args) throws ObjectCopyException {
-        Man man = new Man("test", 20, List.of("Lord of the Rings"));
-        man.addFriend(man);
-        LOGGER.info(() -> "Deep copy is being started for object : " + man);
-        Man copy = CopyUtils.deepCopy(man, Demo::logObjectClone);
-        LOGGER.info(() -> "Deep copied object: " + copy);
+        var src = IntStream.range(0, 3)
+                .boxed()
+                .collect(Collectors.toCollection(LinkedList::new));
+//        LOGGER.info(() -> "Deep copy is being started for object : " + src);
+        for (Integer integer : src) {
+            System.out.println(integer);
+        }
+        var copy = CopyUtils.deepCopy(src, Demo::logObjectClone);
+        assert copy.equals(src);
+        for (Integer integer : copy) {
+            System.out.println(integer);
+        }
+//        LOGGER.info(() -> "Deep copied object: " + copy);
     }
 
     private static void logObjectClone(Object src, Object clone) {

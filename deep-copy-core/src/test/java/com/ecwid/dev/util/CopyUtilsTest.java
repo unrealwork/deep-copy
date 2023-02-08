@@ -2,15 +2,22 @@ package com.ecwid.dev.util;
 
 import com.ecwid.dev.copier.exceptions.ObjectCopyException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -34,10 +41,12 @@ final class CopyUtilsTest {
                 arguments(1),
                 arguments(Boolean.TRUE),
                 arguments('a'),
-                arguments(ParameterizedTest.class),
                 arguments(new Integer[] {1, 2, 3}),
                 arguments(new Cat()),
-                arguments(new TestRecord(1))
+                arguments(new ArrayList<>(List.of(1, 2, 3))),
+                arguments(new LinkedList<>(List.of(1, 2, 3))),
+                arguments(new HashMap<>(Map.of(1, 1, 2, 2, 3, 3))),
+                arguments(new TreeMap<>(Map.of(1, 1, 2, 2, 3, 3)))
         );
     }
 
@@ -47,6 +56,7 @@ final class CopyUtilsTest {
     void deepObjectCopy(Object src) throws ObjectCopyException {
         // Validate that all objects cloned during deep copy have different references.
         Object copy = CopyUtils.deepCopy(src, Assertions::assertNotSame);
+        assertNotSame(src, copy);
         assertEquals(src, copy);
     }
 
@@ -98,5 +108,24 @@ final class CopyUtilsTest {
             }
         });
         Assertions.assertEquals(PARALLEL_TASK_COUNT, map.size());
+    }
+
+    @Test
+    @Disabled("Not implemented support for deep hierarchy")
+    @DisplayName("Copying big depth objects")
+    void bigDepthObject() throws ObjectCopyException {
+        var linkedList = IntStream.range(0, 1000)
+                .boxed()
+                .collect(Collectors.toCollection(LinkedList::new));
+        var copiedList = CopyUtils.deepCopy(linkedList);
+        assertNotSame(linkedList, copiedList);
+    }
+    
+    @Test
+    @DisplayName("Copying lambda")
+    void copyingLambdaObject() throws ObjectCopyException {
+        Supplier<String> f = () -> "test";
+        Supplier<String> copiedF = CopyUtils.deepCopy(f);
+        assertEquals("test", copiedF.get());
     }
 }
