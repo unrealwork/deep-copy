@@ -5,5 +5,4 @@ open module com.ecwid.dev.deep.copy {
     
     exports com.ecwid.dev.util;
     exports com.ecwid.dev.copier.exceptions;
-    exports com.ecwid.dev.factory;
 }
