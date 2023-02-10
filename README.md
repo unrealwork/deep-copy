@@ -2,7 +2,7 @@
 
 [![Java CI with Maven](https://github.com/unrealwork/deep-copy/actions/workflows/maven.yml/badge.svg)](https://github.com/unrealwork/deep-copy/actions/workflows/maven.yml)
 
-Deep Copy implement deep copy of an object via reflection according
+Deep Copy implements deep copy of an object via reflection according
 to [task](https://github.com/Ecwid/new-job/blob/master/Deep-clone.md).
 
 ## Usage
